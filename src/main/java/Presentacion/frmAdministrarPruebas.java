@@ -75,6 +75,11 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
         btnRegresar.setText("Regresar");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnAgregarParametros.setText("Agregar parametros");
         btnAgregarParametros.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +188,10 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
         frmAgregarParametros agregarParametrosFrame = new frmAgregarParametros(idCategoria, nombrePrueba, rango, parametrosNegocio);
         agregarParametrosFrame.setVisible(true);
     }//GEN-LAST:event_btnAgregarParametrosActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments

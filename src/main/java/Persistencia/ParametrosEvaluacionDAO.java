@@ -18,7 +18,7 @@ public class ParametrosEvaluacionDAO implements IParametrosEvaluacionDAO {
     private IConexionBD conexionBD;
     
     public ParametrosEvaluacionDAO() {
-        this.conexionBD = new ConexionBD();  // Instanciar la clase ConexionBD
+        this.conexionBD = new ConexionBD(); 
     }
     
     @Override
@@ -27,15 +27,20 @@ public class ParametrosEvaluacionDAO implements IParametrosEvaluacionDAO {
         PreparedStatement stmt = null;
         
         try {
-            // Usar la instancia de conexionBD para obtener la conexión
-            connection = conexionBD.crearConexion(); 
+            // Establecer conexión a la base de datos
+            connection = conexionBD.crearConexion();
 
+            // Obtener el idPruebaAnalisis usando el nombre de la prueba
+            int idPruebaAnalisis = obtenerIdPruebaAnalisis(nombrePrueba);
+            
+            if (idPruebaAnalisis == 0) {
+                System.out.println("Error: No se encontró el idPruebaAnalisis para el nombre de prueba: " + nombrePrueba);
+                return;  // Evitar la inserción si no se encontró el idPruebaAnalisis
+            }
+
+            // Insertar el parámetro de evaluación
             String sql = "INSERT INTO ParametrosEvaluacion (nombre, rango, idPruebaAnalisis) VALUES (?, ?, ?)";
             stmt = connection.prepareStatement(sql);
-            
-            // Necesitamos obtener el id de la prueba analizada según su nombre
-            int idPruebaAnalisis = obtenerIdPruebaAnalisis(nombrePrueba); // Método que obtiene el idPruebaAnalisis
-            
             stmt.setString(1, nombre);
             stmt.setString(2, rango);
             stmt.setInt(3, idPruebaAnalisis);
@@ -56,8 +61,8 @@ public class ParametrosEvaluacionDAO implements IParametrosEvaluacionDAO {
         ResultSet rs = null;
 
         try {
-            // Usar la instancia de conexionBD para obtener la conexión
-            connection = conexionBD.crearConexion(); 
+            // Establecer conexión a la base de datos
+            connection = conexionBD.crearConexion();
             String sql = "SELECT idPruebaAnalisis FROM PruebasAnalisis WHERE nombre = ?";
             stmt = connection.prepareStatement(sql);
             stmt.setString(1, nombrePrueba);
