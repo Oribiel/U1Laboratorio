@@ -4,17 +4,24 @@
  */
 package Presentacion;
 
+import Negocio.IParametrosEvaluacionNegocio;
+
 /**
  *
  * @author oribi
  */
 public class frmAgregarParametros extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmAgregarParametros
-     */
-    public frmAgregarParametros() {
+     private IParametrosEvaluacionNegocio parametrosNegocio;
+    private int idCategoria;
+    private String nombrePrueba;
+    private String rango;
+     public frmAgregarParametros(int idCategoria, String nombrePrueba, String rango, IParametrosEvaluacionNegocio parametrosNegocio) {
         initComponents();
+        this.idCategoria = idCategoria;
+        this.nombrePrueba = nombrePrueba;
+        this.rango = rango;
+        this.parametrosNegocio = parametrosNegocio; 
     }
 
     /**
@@ -43,6 +50,11 @@ public class frmAgregarParametros extends javax.swing.JFrame {
         AgregarParametros.setText("Agregar Parametros");
 
         btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         Parametros.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         Parametros.setText("Parametros:");
@@ -140,43 +152,20 @@ public class frmAgregarParametros extends javax.swing.JFrame {
     }//GEN-LAST:event_TextFieldParametrosActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
+       String parametro = TextFieldParametros.getText();
+        parametrosNegocio.registrarParametro(parametro, rango, nombrePrueba);
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+       this.setVisible(false);
+        frmAdministrarPruebas mainFrame = new frmAdministrarPruebas();
+        mainFrame.setVisible(true);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarParametros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarParametros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarParametros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarParametros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmAgregarParametros().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel AgregarParametros;

@@ -22,7 +22,7 @@ public class ConexionBD implements IConexionBD {
     private final String BASE_DE_DATOS = "LaboratoriosBD";
     private final String URL = "jdbc:mysql://" + SERVIDOR + "/" + BASE_DE_DATOS;
 
-    @Override
+   
     public Connection crearConexion() throws SQLException {
         return DriverManager.getConnection(URL, USUARIO, CONTRASEÑA);
     }

@@ -4,17 +4,19 @@
  */
 package Presentacion;
 
+import Negocio.IParametrosEvaluacionNegocio;
+import Negocio.ParametrosEvaluacionNegocio;
+
 /**
  *
  * @author oribi
  */
 public class frmAdministrarPruebas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmAdministrarPruebas
-     */
+    private IParametrosEvaluacionNegocio parametrosNegocio;
     public frmAdministrarPruebas() {
         initComponents();
+        parametrosNegocio = new ParametrosEvaluacionNegocio();
     }
 
     /**
@@ -160,7 +162,7 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ComboBoxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxCategoriaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_ComboBoxCategoriaActionPerformed
 
     private void texfieldNombrePruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_texfieldNombrePruebaActionPerformed
@@ -172,7 +174,14 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
     }//GEN-LAST:event_texfieldRangoActionPerformed
 
     private void btnAgregarParametrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarParametrosActionPerformed
-      
+     // Capturamos los datos de la prueba
+        String nombrePrueba = texfieldNombrePrueba.getText();
+        String rango = texfieldRango.getText();
+        int idCategoria = ComboBoxCategoria.getSelectedIndex() + 1; // Suponiendo que el combo tiene ids correctos
+
+        // Abrimos el segundo frame para agregar parámetros
+        frmAgregarParametros agregarParametrosFrame = new frmAgregarParametros(idCategoria, nombrePrueba, rango, parametrosNegocio);
+        agregarParametrosFrame.setVisible(true);
     }//GEN-LAST:event_btnAgregarParametrosActionPerformed
 
     /**
