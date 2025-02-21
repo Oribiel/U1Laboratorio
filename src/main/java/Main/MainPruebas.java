@@ -55,7 +55,7 @@ public class MainPruebas {
             try {
                 if (conexion != null) {
                     conexion.close();
-                    System.out.println("Conexión cerrada correctamente.");
+                    System.out.println("Conexion cerrada correctamente.");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
