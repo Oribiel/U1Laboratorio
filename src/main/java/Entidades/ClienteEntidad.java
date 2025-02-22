@@ -55,6 +55,11 @@ public class ClienteEntidad {
     public void setIdLaboratorio(int idLaboratorio) {
         this.idLaboratorio = idLaboratorio;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteEntidad{" + "id=" + id + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaNacimiento=" + fechaNacimiento + ", idLaboratorio=" + idLaboratorio + '}';
+    }
     
     
 }

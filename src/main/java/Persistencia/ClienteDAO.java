@@ -112,12 +112,12 @@ public class ClienteDAO implements IClienteDAO {
             // obtener id generado
             ResultSet resultado = preparedStatement.getGeneratedKeys();
             if (resultado.next()) {
-                int idAlumno = (resultado.getInt(1));
+                int idCliente = (resultado.getInt(1));
 
                 resultado.close();
                 preparedStatement.close();
                 conexion.close();
-                return buscarPorId(idAlumno);
+                return buscarPorId(idCliente);
             }
 
         } catch (SQLException ex) {
@@ -181,7 +181,7 @@ public class ClienteDAO implements IClienteDAO {
                 int filasAfectadas = prepararConsulta.executeUpdate(); // Se usa executeUpdate()
 
                 if (filasAfectadas == 0) {
-                    throw new PersistenciaException("No se encontró un alumno con el ID proporcionado.");
+                    throw new PersistenciaException("No se encontró un cliente con el ID proporcionado.");
                 }
                 prepararConsulta.close();
             }
@@ -190,7 +190,7 @@ public class ClienteDAO implements IClienteDAO {
             return buscarPorId(id);
 
         } catch (SQLException e) {
-            throw new PersistenciaException("Error al eliminar el alumno: " + e.getMessage());
+            throw new PersistenciaException("Error al eliminar el cliente: " + e.getMessage());
         }
         
     }
@@ -209,7 +209,7 @@ public class ClienteDAO implements IClienteDAO {
             ResultSet resultado = prepararConsulta.executeQuery();
 
             if (resultado.next()) {
-                // convertir alumno en entidad
+                // convertir cliente en entidad
                 return clienteEncontrado = convertirClienteEntidad(resultado);
 
             }
