@@ -60,6 +60,26 @@ public class ClienteEntidad {
     public String toString() {
         return "ClienteEntidad{" + "id=" + id + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaNacimiento=" + fechaNacimiento + ", idLaboratorio=" + idLaboratorio + '}';
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
+    }
+
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
+    }
+
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
     
     
 }

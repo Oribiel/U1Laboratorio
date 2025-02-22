@@ -91,7 +91,8 @@ public class ClienteDAO implements IClienteDAO {
                                                            `apellidoPaterno`,
                                                            `apellidoMaterno`,
                                                            `fechaNacimiento`, 
-                                                            'idLaboratorio')
+                                                            `idLaboratorio`
+                                                            )
                                                    VALUES (?, ? , ? , ?,?);
                                     """;
 
@@ -139,12 +140,12 @@ public class ClienteDAO implements IClienteDAO {
         try {
             ClienteEntidad clienteEntidad;
 ;            String updateSQL = """
-                             UPDATE alumnos
+                             UPDATE Clientes
                              SET nombres = ?,
                              apellidoPaterno = ?,
                              apellidoMaterno = ?,
                              fechaNacimiento=?
-                             WHERE idAlumno = ?;
+                             WHERE idCliente = ?;
                              """;
             PreparedStatement prepararConsulta = this.conexionBD.crearConexion().prepareStatement(updateSQL);
             prepararConsulta.setString(1, cliente.getNombres());
@@ -157,7 +158,7 @@ public class ClienteDAO implements IClienteDAO {
             int filasAfectadas = prepararConsulta.executeUpdate();
             prepararConsulta.close();
             if (filasAfectadas == 0) {
-                throw new PersistenciaException("No se pudo actualizar alumno");
+                throw new PersistenciaException("No se pudo actualizar cliente");
             }
 
             return buscarPorId(cliente.getId());
@@ -170,11 +171,11 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public ClienteEntidad eliminar(int id) throws PersistenciaException {
+    public Boolean eliminar(int id) throws PersistenciaException {
         try (Connection conexion = this.conexionBD.crearConexion()) {
             String consultaSQL = """
                              DELETE FROM Clientes
-                             WHERE idCliente=?;
+                             WHERE idCliente = ?;
                              """;
             try (PreparedStatement prepararConsulta = conexion.prepareStatement(consultaSQL)) {
                 prepararConsulta.setInt(1, id);
@@ -183,16 +184,12 @@ public class ClienteDAO implements IClienteDAO {
                 if (filasAfectadas == 0) {
                     throw new PersistenciaException("No se encontró un cliente con el ID proporcionado.");
                 }
-                prepararConsulta.close();
             }
-
-            // Buscar el alumno actualizado después de marcarlo como eliminado
-            return buscarPorId(id);
+            return true; // Retorna true si la eliminación fue exitosa
 
         } catch (SQLException e) {
             throw new PersistenciaException("Error al eliminar el cliente: " + e.getMessage());
         }
-        
     }
 
     @Override
@@ -201,7 +198,7 @@ public class ClienteDAO implements IClienteDAO {
         try {
             ClienteEntidad clienteEncontrado = null;
             String consultaSQL = """
-                               SELECT * FROM Clientes WHERE idAlumno =?;
+                               SELECT * FROM Clientes WHERE idCliente =?;
                                """;
             Connection conexion = this.conexionBD.crearConexion();
             PreparedStatement prepararConsulta = conexion.prepareStatement(consultaSQL);
