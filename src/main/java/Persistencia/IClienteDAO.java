@@ -7,6 +7,7 @@ package Persistencia;
 import DTOS.EditarClienteDTO;
 import DTOS.GuardarClienteDTO;
 import Entidades.ClienteEntidad;
+import Entidades.LaboratorioEntidad;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  */
 public interface IClienteDAO {
     
-    List<ClienteEntidad> buscarClientesPorLaboratorio(int id) throws PersistenciaException;
+    List<ClienteEntidad> buscarClientesPorLaboratorio( int laboratorio) throws PersistenciaException;
 
     ClienteEntidad guardar(GuardarClienteDTO cliente) throws PersistenciaException;
 

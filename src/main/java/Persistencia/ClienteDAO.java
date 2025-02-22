@@ -7,6 +7,7 @@ package Persistencia;
 import DTOS.EditarClienteDTO;
 import DTOS.GuardarClienteDTO;
 import Entidades.ClienteEntidad;
+import Entidades.LaboratorioEntidad;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -30,21 +31,14 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public List<ClienteEntidad> buscarClientesPorLaboratorio(int id) throws PersistenciaException {
+    public List<ClienteEntidad> buscarClientesPorLaboratorio(int laboratorio) throws PersistenciaException {
         try {
             String consultaSQL = """
-                                 SELECT
-                                 	idCliente,
-                                 	nombres,
-                                 	apellidoPaterno,
-                                 	apellidoMaterno, 
-                                        fechaNacimiento
-                                 FROM Clientes
-                                 WHERE idLaboratorio = ?;                                 
+                                 SELECT * From Clientes WHERE idLaboratorio=?;                                 
                                  """;
             Connection conexion = this.conexionBD.crearConexion();
             PreparedStatement preparedStatement = conexion.prepareStatement(consultaSQL);
-            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(1,laboratorio);
             ResultSet resultado = preparedStatement.executeQuery();
 
             List<ClienteEntidad> ClientesEntidadLista = null;

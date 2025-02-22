@@ -50,7 +50,7 @@ public class pruebasCliente {
 //             Instanciar ClienteDAO
             ClienteDAO clienteDAO = new ClienteDAO(conexion);
             
-            //GUARDAR CLIENTE EN LA BD
+           // GUARDAR CLIENTE EN LA BD
             LocalDate fechaNacimiento = LocalDate.of(2005, Month.DECEMBER, 9);
             GuardarClienteDTO guardar = new GuardarClienteDTO("Jack Tadeo", "Murrieta", "Torres",fechaNacimiento, lab.getIdLaboratorio());
             
@@ -70,32 +70,10 @@ public class pruebasCliente {
             System.out.println("Cliente eliminado es: "+eliminado);
             
             //CATALAGO DE CLIENTES
-            List<ClienteEntidad> clientes = clienteDAO.buscarClientesPorLaboratorio(lab.getIdLaboratorio());
+            
+            List<ClienteEntidad> clientes = clienteDAO.buscarClientesPorLaboratorio(1);
             System.out.println(clientes.toString());
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-
-//            // Buscar clientes por laboratorio con ID = 1
-//            int idLaboratorio = 1;
-//            List<ClienteEntidad> clientes = clienteDAO.buscarClientesPorLaboratorio(idLaboratorio);
-//
-//            // Imprimir resultados
-//            if (clientes != null && !clientes.isEmpty()) {
-//                System.out.println("📋 Lista de clientes en el laboratorio ID " + idLaboratorio + ":");
-//                for (ClienteEntidad cliente : clientes) {
-//                    System.out.println(cliente);
-//                }
-//            } else {
-//                System.out.println("⚠ No se encontraron clientes en el laboratorio ID " + idLaboratorio);
-//            }
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "❌ Error al conectarse a la base de datos: " + ex.getMessage());
