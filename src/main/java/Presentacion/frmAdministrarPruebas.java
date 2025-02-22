@@ -186,31 +186,8 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarParametrosActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-    try {
-            // Obtener idCategoria desde el ComboBox
-             categoriaSeleccionada = (String) ComboBoxCategoria.getSelectedItem();
-            int idCategoria = categoriasNegocio.obtenerCategoriaPorId(categoriaSeleccionada);
-
-            // Crear y registrar la prueba de análisis
-            PruebaAnalisisDTO pruebaDTO = new PruebaAnalisisDTO();
-            pruebaDTO.setNombre(txtNombrePrueba.getText());  // Asumimos que tienes un campo de texto para nombre de prueba
-            pruebaDTO.setIdCategoria(idCategoria);
-            
-
-            pruebaAnalisisNegocio.registrarPrueba(pruebaDTO);
-            
-            // Guardar parámetros asociados a la prueba
-            for (ParametroDTO parametro : listaParametros) {
-                parametrosNegocio.registrarParametro(parametro.getNombre(), parametro.getRango(), pruebaDTO.getNombre());
-            }
-
-            JOptionPane.showMessageDialog(this, "Prueba y parámetros guardados correctamente.");
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error al guardar la prueba: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
+   
+    
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
