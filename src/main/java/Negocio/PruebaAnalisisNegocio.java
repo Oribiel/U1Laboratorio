@@ -26,7 +26,7 @@ public class PruebaAnalisisNegocio implements IPruebaAnalisisNegocio {
     @Override
     public void registrarPrueba(PruebaAnalisisDTO pruebaDTO) {
         PruebaAnalisis prueba = new PruebaAnalisis(
-            0,
+            0,  // ID será generado automáticamente por la base de datos
             pruebaDTO.getNombre(),
             pruebaDTO.getIdCategoria(),
             pruebaDTO.getIdLaboratorio()
@@ -63,4 +63,5 @@ public class PruebaAnalisisNegocio implements IPruebaAnalisisNegocio {
         );
     }
 }
+
 

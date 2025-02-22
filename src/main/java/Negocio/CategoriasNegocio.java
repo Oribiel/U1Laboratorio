@@ -28,5 +28,6 @@ public class CategoriasNegocio implements ICategoriasNegocio {
     public String obtenerCategoriaPorId(int idCategoria) throws SQLException {
         return categoriasDAO.obtenerCategoriaPorId(idCategoria);
     }
+  
 }
 

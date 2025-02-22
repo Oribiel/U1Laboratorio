@@ -14,5 +14,6 @@ import java.util.List;
 public interface ICategoriasNegocio {
     List<String> obtenerCategorias() throws SQLException;
     String obtenerCategoriaPorId(int idCategoria) throws SQLException;
+    
 }
 

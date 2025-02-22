@@ -4,12 +4,16 @@
  */
 package Presentacion;
 
+import DTOS.PruebaAnalisisDTO;
 import Negocio.CategoriasNegocio;
 import Negocio.ICategoriasNegocio;
 import Negocio.IParametrosEvaluacionNegocio;
+import Negocio.IPruebaAnalisisNegocio;
 import Negocio.ParametrosEvaluacionNegocio;
+import Negocio.PruebaAnalisisNegocio;
 import Persistencia.CategoriasDAO;
 import Persistencia.ConexionBD;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -22,11 +26,13 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
 
     private IParametrosEvaluacionNegocio parametrosNegocio;
     private ICategoriasNegocio categoriasNegocio;
+    private IPruebaAnalisisNegocio pruebaAnalisisNegocio;
 
     public frmAdministrarPruebas() {
         initComponents();
         parametrosNegocio = new ParametrosEvaluacionNegocio();
-        categoriasNegocio = new CategoriasNegocio(new CategoriasDAO(new ConexionBD()));  // Inicializamos la capa de negocio para categorías
+        categoriasNegocio = new CategoriasNegocio(new CategoriasDAO(new ConexionBD()));  
+        pruebaAnalisisNegocio = new PruebaAnalisisNegocio((Connection) new ConexionBD());  // Inicia la capa de negocio de pruebas
         cargarCategorias();
     }
 
@@ -180,7 +186,31 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarParametrosActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+    try {
+            // Obtener idCategoria desde el ComboBox
+             categoriaSeleccionada = (String) ComboBoxCategoria.getSelectedItem();
+            int idCategoria = categoriasNegocio.obtenerCategoriaPorId(categoriaSeleccionada);
+
+            // Crear y registrar la prueba de análisis
+            PruebaAnalisisDTO pruebaDTO = new PruebaAnalisisDTO();
+            pruebaDTO.setNombre(txtNombrePrueba.getText());  // Asumimos que tienes un campo de texto para nombre de prueba
+            pruebaDTO.setIdCategoria(idCategoria);
+            
+
+            pruebaAnalisisNegocio.registrarPrueba(pruebaDTO);
+            
+            // Guardar parámetros asociados a la prueba
+            for (ParametroDTO parametro : listaParametros) {
+                parametrosNegocio.registrarParametro(parametro.getNombre(), parametro.getRango(), pruebaDTO.getNombre());
+            }
+
+            JOptionPane.showMessageDialog(this, "Prueba y parámetros guardados correctamente.");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al guardar la prueba: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
