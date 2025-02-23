@@ -6,6 +6,7 @@ package Persistencia;
 
 import DTOS.AnalisisClienteDTO;
 import Entidades.AnalisisClienteEntidad;
+import java.util.List;
 
 /**
  *
@@ -13,5 +14,6 @@ import Entidades.AnalisisClienteEntidad;
  */
 public interface IAnalisisClientes {
    public AnalisisClienteEntidad generarUnAnalisisCliente(AnalisisClienteDTO analisisCliente)throws PersistenciaException;
+   List <AnalisisClienteEntidad> listarAnalisisPorCliente(int idCliente)throws PersistenciaException;
     
 }

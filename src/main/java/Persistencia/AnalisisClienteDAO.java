@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -97,5 +99,34 @@ public class AnalisisClienteDAO implements IAnalisisClientes{
         return analisisEncontrado;
         
     }
-    
+
+    @Override
+    public List<AnalisisClienteEntidad> listarAnalisisPorCliente(int idCliente) throws PersistenciaException {
+         try{
+        String sql = "SELECT * FROM AnalisisClientes WHERE idCliente = ?";
+        
+        Connection conexion = this.conexion.crearConexion();
+        PreparedStatement pstmt = conexion.prepareStatement(sql);
+        pstmt.setInt(1, idCliente);
+        ResultSet rs = pstmt.executeQuery();
+        
+        List<AnalisisClienteEntidad> listaAnalisisCliente = null;
+            while (rs.next()) {
+                if(listaAnalisisCliente==null){
+                    listaAnalisisCliente = new ArrayList<>();
+                }
+                listaAnalisisCliente.add(convertirAnalisisCliente(rs));
+            }
+            rs.close();
+            conexion.close();
+            pstmt.close();
+            return listaAnalisisCliente;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+        
 }
+    
+
