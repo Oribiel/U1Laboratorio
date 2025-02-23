@@ -30,7 +30,7 @@ public class AnalisisClienteDAO implements IAnalisisClientes{
     }
 
     @Override
-    public AnalisisClienteEntidad generarUnAnalisisCliente(AnalisisClienteDTO analisisCliente) throws PersistenciaException {
+    public AnalisisClienteEntidad generarUnAnalisisCliente(AnalisisClienteEntidad analisisCliente) throws PersistenciaException {
          
         String sql = "INSERT INTO AnalisisClientes (folio, fechaYhoraCaptura, idCliente) VALUES (?, ?, ?)";
         try {
