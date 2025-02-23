@@ -24,7 +24,7 @@ public class CategoriasDAO implements ICategoriasDAO {
         this.conexionBD = conexionBD;
     }
 
-  
+  @Override
     public List<CategoriaEntidad> obtenerCategorias() {
         List<CategoriaEntidad> categorias = new ArrayList<>();
         String query = "SELECT * FROM Categorias";
@@ -53,7 +53,7 @@ public class CategoriasDAO implements ICategoriasDAO {
     @Override
     public CategoriaEntidad obtenerCategoriaPorId(int idCategoria) {
         CategoriaEntidad categoria = null;
-        String query = "SELECT nombre FROM Categorias WHERE idCategoria = ?";
+        String query = "SELECT * FROM Categorias WHERE idCategoria = ?";
 
       
         try (Connection connection = conexionBD.crearConexion();

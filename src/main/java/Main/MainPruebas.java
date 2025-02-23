@@ -5,10 +5,18 @@
 package Main;
 
 import DTOS.PruebaAnalisisDTO;
+import Entidades.CategoriaEntidad;
+import Entidades.LaboratorioEntidad;
+import Entidades.PruebaAnalisis;
 import Negocio.IPruebaAnalisisNegocio;
-import Negocio.PruebaAnalisisNegocio;
+import Negocio.NegocioException;
+import Persistencia.CategoriasDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IConexionBD;
+import Persistencia.IPruebaAnalisisDAO;
+import Persistencia.LaboratorioDAO;
+import Persistencia.PersistenciaException;
+import Persistencia.PruebaAnalisisDAO;
 import java.sql.Connection;
 import java.util.List;
 
@@ -18,50 +26,69 @@ import java.util.List;
  */
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JOptionPane;
 
 public class MainPruebas {
     public static void main(String[] args) {
-        IConexionBD conexionBD = new ConexionBD();
-        Connection conexion = null;
+       // Crear conexión a la BD
+        IConexionBD conexion = new ConexionBD();
+        Connection conn = null;
 
         try {
-            conexion = conexionBD.crearConexion();
-            IPruebaAnalisisNegocio negocio = new PruebaAnalisisNegocio(conexion);
+            conn = conexion.crearConexion();
+            JOptionPane.showMessageDialog(null, "✅ ¡Conexión exitosa a la base de datos!");
+            //Buscar el laboratorio en la base de datos
+            
+            LaboratorioDAO labDAO = new LaboratorioDAO(conexion);
+            LaboratorioEntidad lab = labDAO.buscarLaboratorioPorid(1);
+            System.out.println(lab.toString());
+            
+            //Obtener Las Categorias
+            CategoriasDAO categoriaDAO = new CategoriasDAO(conexion);
+            List<CategoriaEntidad> categorias = categoriaDAO.obtenerCategorias();
+            
+            System.out.println("Categorias en la BD: "+ categorias.toString());
+            
+            // obtener una categoria 
+            CategoriaEntidad categoria = categoriaDAO.obtenerCategoriaPorId(2);
+            System.out.println("Categoria Obtenida: "+categoria.toString());
+            
+            // Guardar Una pruebaAnalisis
+            PruebaAnalisisDAO pruebaDAO = new PruebaAnalisisDAO(conexion);
+            PruebaAnalisisDTO pruebaDTO = new PruebaAnalisisDTO("nuevaPrueba",categoria.getIdCategoria(),lab.getIdLaboratorio());
+            PruebaAnalisis pruebaEntidad = pruebaDAO.registrar(pruebaDTO);
+            System.out.println("La prueba registrada es: "+pruebaEntidad.toString());
+            
+            //Listar Pruebas
+            List<PruebaAnalisis> pruebasExistentes = pruebaDAO.listarPruebasAnalisis(lab.getIdLaboratorio());
+            System.out.println("Pruebas en la BD: "+pruebasExistentes.toString());
+            
+            //BuscarPrueba
+            PruebaAnalisis pruebaEncontrada = pruebaDAO.buscarPorId(2, lab.getIdLaboratorio());
+            System.out.println("PruebaEncontrada: "+pruebaEncontrada);
 
-            // Registrar una nueva prueba
-            PruebaAnalisisDTO nuevaPrueba = new PruebaAnalisisDTO(0, "Prueba de Sangre", 1, 1);
-            negocio.registrarPrueba(nuevaPrueba);
-            System.out.println("Prueba registrada correctamente.");
-
-            // Listar pruebas
-            List<PruebaAnalisisDTO> pruebas = negocio.listarPruebas();
-            for (PruebaAnalisisDTO p : pruebas) {
-                System.out.println("ID: " + p.getIdPruebaAnalisis() + ", Nombre: " + p.getNombre());
-            }
-
-            // Buscar prueba por ID
-            int idBuscado = 1;
-            PruebaAnalisisDTO prueba = negocio.obtenerPrueba(idBuscado);
-            if (prueba != null) {
-                System.out.println("Prueba encontrada: " + prueba.getNombre());
-            } else {
-                System.out.println("Prueba con ID " + idBuscado + " no encontrada.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "❌ Error al conectarse a la base de datos: " + ex.getMessage());
+            ex.printStackTrace();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(MainPruebas.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            try {
-                if (conexion != null) {
-                    conexion.close();
-                    System.out.println("Conexion cerrada correctamente.");
+            // Cerrar la conexión si se abrió correctamente
+            if (conn != null) {
+                try {
+                    conn.close();
+                    System.out.println("🔒 Conexión cerrada correctamente.");
+                } catch (SQLException ex) {
+                    System.out.println("⚠ Error al cerrar la conexión: " + ex.getMessage());
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }
 }
+
+
 
 

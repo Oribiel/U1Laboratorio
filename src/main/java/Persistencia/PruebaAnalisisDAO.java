@@ -35,14 +35,16 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
                 throw new PersistenciaException("No se pudo insertar la Prueba Analisis");
             }
             //obtener id generado de pruebaAnalisis
+            int idLab = prueba.getIdLaboratorio();
             ResultSet resultado = stmt.getGeneratedKeys();
             if (resultado.next()) {
                 int idPrueba = resultado.getInt(1);
-                int idLab = resultado.getInt(4);
                 resultado.close();
                 stmt.close();
                 return buscarPorId(idPrueba, idLab);
+                
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (PersistenciaException ex) {

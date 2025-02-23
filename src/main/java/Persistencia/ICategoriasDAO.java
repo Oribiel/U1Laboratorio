@@ -13,6 +13,7 @@ import java.util.List;
  * @author oribi
  */
 public interface ICategoriasDAO {
+    
     List<CategoriaEntidad> obtenerCategorias() throws SQLException;
     CategoriaEntidad obtenerCategoriaPorId(int idCategoria) throws SQLException;
 }
