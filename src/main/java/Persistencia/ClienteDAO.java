@@ -165,7 +165,7 @@ public class ClienteDAO implements IClienteDAO {
     }
 
     @Override
-    public Boolean eliminar(int id) throws PersistenciaException {
+    public ClienteEntidad eliminar(int id) throws PersistenciaException {
         try (Connection conexion = this.conexionBD.crearConexion()) {
             String consultaSQL = """
                              DELETE FROM Clientes
@@ -173,13 +173,15 @@ public class ClienteDAO implements IClienteDAO {
                              """;
             try (PreparedStatement prepararConsulta = conexion.prepareStatement(consultaSQL)) {
                 prepararConsulta.setInt(1, id);
+                ClienteEntidad eliminado= buscarPorId(id);
                 int filasAfectadas = prepararConsulta.executeUpdate(); // Se usa executeUpdate()
 
                 if (filasAfectadas == 0) {
                     throw new PersistenciaException("No se encontró un cliente con el ID proporcionado.");
                 }
+                return eliminado; // retorna el Cliente eliminado en la BD
             }
-            return true; // Retorna true si la eliminación fue exitosa
+            
 
         } catch (SQLException e) {
             throw new PersistenciaException("Error al eliminar el cliente: " + e.getMessage());

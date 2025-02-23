@@ -4,10 +4,14 @@
  */
 package Main;
 
+import DTOS.ClienteDTO;
 import DTOS.EditarClienteDTO;
 import DTOS.GuardarClienteDTO;
+import DTOS.TablaClienteDTO;
 import Entidades.ClienteEntidad;
 import Entidades.LaboratorioEntidad;
+import Negocio.ClienteNegocio;
+import Negocio.NegocioException;
 import Persistencia.ClienteDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IConexionBD;
@@ -49,36 +53,36 @@ public class pruebasCliente {
             
 //             Instanciar ClienteDAO
             ClienteDAO clienteDAO = new ClienteDAO(conexion);
+            ClienteNegocio clienteNegocio = new ClienteNegocio(clienteDAO);
             
            // GUARDAR CLIENTE EN LA BD
             LocalDate fechaNacimiento = LocalDate.of(2005, Month.DECEMBER, 9);
-            GuardarClienteDTO guardar = new GuardarClienteDTO("Jack Tadeo", "Murrieta", "Torres",fechaNacimiento, lab.getIdLaboratorio());
+            GuardarClienteDTO guardar = new GuardarClienteDTO("Pepito", "Murrieta", "Torres",fechaNacimiento, lab.getIdLaboratorio());
             
-            ClienteEntidad clienteE= clienteDAO.guardar(guardar);
-            System.out.println(clienteE.toString());
-            
-            //EDITAR CLIENTE EN LA BD
+            ClienteDTO clienteDTO= clienteNegocio.guardar(guardar);
+            System.out.println("Cliente guardado en la BD: "+ clienteDTO.toString());
+//            
+//            //EDITAR CLIENTE EN LA BD
             LocalDate fechaNacimiento2 = LocalDate.of(2005, Month.OCTOBER, 12);
-            EditarClienteDTO editCliente = new EditarClienteDTO(clienteE.getId(), "Jack", "Torres", "Murrieta", fechaNacimiento2);
+            int idGuardar= Integer.parseInt(clienteDTO.getId());
+            EditarClienteDTO editCliente = new EditarClienteDTO(idGuardar, "Jack", "Torres", "Murrieta", fechaNacimiento2);
+            ClienteDTO clienteDto1 =  clienteNegocio.editar(editCliente);
+            System.out.println("Cliente editado en la BD: "+clienteDto1);
+
+//            //ELIMINAR CLIENTE
+              ClienteDTO eliminado = clienteNegocio.eliminar(idGuardar);
+              System.out.println("Cliente eliminado en la BD: "+eliminado.toString());
             
-            int idEditCliente = editCliente.getId();
-            ClienteEntidad editar = clienteDAO.editar(editCliente);
-            System.out.println(editar.toString());
+//            //CATALAGO DE CLIENTES
             
-            //ELIMINAR CLIENTE
-            boolean eliminado = clienteDAO.eliminar(editar.getId());
-            System.out.println("Cliente eliminado es: "+eliminado);
-            
-            //CATALAGO DE CLIENTES
-            
-            List<ClienteEntidad> clientes = clienteDAO.buscarClientesPorLaboratorio(1);
+            List<TablaClienteDTO> clientes = clienteNegocio.buscarClientesPorLaboratorio(1);
             System.out.println(clientes.toString());
             
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "❌ Error al conectarse a la base de datos: " + ex.getMessage());
             ex.printStackTrace();
-        } catch (PersistenciaException ex) {
+        } catch (NegocioException ex) {
             Logger.getLogger(pruebasCliente.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             // Cerrar la conexión si se abrió correctamente
