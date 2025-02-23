@@ -74,6 +74,7 @@ public class pruebasCliente {
             System.out.println("Cliente editado en la BD: "+clienteDto1);
             
             //GENERAR UN ANALISIS CLIENTE
+            //LOCALDATETIME.NOW PARA CAPTURAR DATOS 
             AnalisisClienteDTO analisiscliente = new AnalisisClienteDTO(12, LocalDateTime.now(), idGuardar);
             AnalisisClienteDAO acDTO = new AnalisisClienteDAO(conexion);
             AnalisisClienteEntidad acEntidad = acDTO.generarUnAnalisisCliente(analisiscliente);

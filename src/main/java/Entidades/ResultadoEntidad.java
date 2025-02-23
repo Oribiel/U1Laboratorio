@@ -63,6 +63,11 @@ public class ResultadoEntidad {
     public void setIdAnalisisCliente(int idAnalisisCliente) {
         this.idAnalisisCliente = idAnalisisCliente;
     }
+
+    @Override
+    public String toString() {
+        return "ResultadoEntidad{" + "idResultado=" + idResultado + ", resultadoParametro=" + resultadoParametro + ", idParametroEvaluacion=" + idParametroEvaluacion + ", idAnalisisCliente=" + idAnalisisCliente + '}';
+    }
     
     
 }

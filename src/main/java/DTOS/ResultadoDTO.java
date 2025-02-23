@@ -9,9 +9,9 @@ package DTOS;
  * @author Usuario
  */
 public class ResultadoDTO {
-        private int idResultado;
-    private String resultadoParametro;  
-    private int idParametroEvaluacion; 
+    private int idResultado;
+    private String resultadoParametro;
+    private int idParametroEvaluacion;
     private int idAnalisisCliente;
     
     // constructor h¿guardar sin id

@@ -4,21 +4,38 @@
  */
 package Entidades;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Usuario
  */
 public class ResultadoPorCliente {
-      private int idResultado;
-    private String resultadoParametro;
-    private String parametro;
-    private String rango;
+     private String nombrePrueba;
     private int folioAnalisis;
     private String nombreCliente;
     private String apellidoPaterno;
     private String apellidoMaterno;
+    private List<ResultadoPorCliente> resultados;
 
-    // Constructor
+    private int idResultado;
+    private String resultadoParametro;
+    private String parametro;
+    private String rango;
+
+    // Constructor para la prueba con lista de resultados
+    public ResultadoPorCliente(String nombrePrueba, int folioAnalisis, String nombreCliente, 
+                               String apellidoPaterno, String apellidoMaterno) {
+        this.nombrePrueba = nombrePrueba;
+        this.folioAnalisis = folioAnalisis;
+        this.nombreCliente = nombreCliente;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.resultados = new ArrayList<>();
+    }
+
+    // Constructor para cada resultado individual
     public ResultadoPorCliente(int idResultado, String resultadoParametro, String parametro, String rango, 
                                int folioAnalisis, String nombreCliente, String apellidoPaterno, String apellidoMaterno) {
         this.idResultado = idResultado;
@@ -31,84 +48,65 @@ public class ResultadoPorCliente {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    // Getters y Setters
-    public int getIdResultado() {
-        return idResultado;
+    // Método para agregar resultados a la lista
+    public void agregarResultado(ResultadoPorCliente resultado) {
+        this.resultados.add(resultado);
     }
 
-    public void setIdResultado(int idResultado) {
-        this.idResultado = idResultado;
-    }
-
-    public String getResultadoParametro() {
-        return resultadoParametro;
-    }
-
-    public void setResultadoParametro(String resultadoParametro) {
-        this.resultadoParametro = resultadoParametro;
-    }
-
-    public String getParametro() {
-        return parametro;
-    }
-
-    public void setParametro(String parametro) {
-        this.parametro = parametro;
-    }
-
-    public String getRango() {
-        return rango;
-    }
-
-    public void setRango(String rango) {
-        this.rango = rango;
+    // Getters
+    public String getNombrePrueba() {
+        return nombrePrueba;
     }
 
     public int getFolioAnalisis() {
         return folioAnalisis;
     }
 
-    public void setFolioAnalisis(int folioAnalisis) {
-        this.folioAnalisis = folioAnalisis;
-    }
-
     public String getNombreCliente() {
         return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
     }
 
     public String getApellidoPaterno() {
         return apellidoPaterno;
     }
 
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
     public String getApellidoMaterno() {
         return apellidoMaterno;
     }
 
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
+    public List<ResultadoPorCliente> getResultados() {
+        return resultados;
     }
 
-    // Método toString para imprimir los datos
+    public int getIdResultado() {
+        return idResultado;
+    }
+
+    public String getResultadoParametro() {
+        return resultadoParametro;
+    }
+
+    public String getParametro() {
+        return parametro;
+    }
+
+    public String getRango() {
+        return rango;
+    }
+
     @Override
     public String toString() {
         return "ResultadoPorCliente{" +
-                "idResultado=" + idResultado +
-                ", resultadoParametro='" + resultadoParametro + '\'' +
-                ", parametro='" + parametro + '\'' +
-                ", rango='" + rango + '\'' +
+                "nombrePrueba='" + nombrePrueba + '\'' +
                 ", folioAnalisis=" + folioAnalisis +
                 ", nombreCliente='" + nombreCliente + '\'' +
                 ", apellidoPaterno='" + apellidoPaterno + '\'' +
                 ", apellidoMaterno='" + apellidoMaterno + '\'' +
+                ", idResultado=" + idResultado +
+                ", resultadoParametro='" + resultadoParametro + '\'' +
+                ", parametro='" + parametro + '\'' +
+                ", rango='" + rango + '\'' +
+                ", resultados=" + resultados +
                 '}';
     }
-        
 }

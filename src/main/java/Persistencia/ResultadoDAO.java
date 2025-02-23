@@ -14,7 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +27,7 @@ import java.util.logging.Logger;
 public class ResultadoDAO implements IResultados {
         private IConexionBD conexionBD;
     
-    public ResultadoDAO() {
+    public ResultadoDAO(ConexionBD conexion) {
         this.conexionBD = new ConexionBD(); 
     }
 
@@ -64,11 +66,12 @@ public class ResultadoDAO implements IResultados {
 
     }
 
-    public List<ResultadoPorCliente> ResultadosPorCliente(int idAnalisisCliente) throws PersistenciaException {
+    public List<ResultadoPorCliente> obtenerResultadosPorCliente(int idCliente) throws PersistenciaException {
         List<ResultadoPorCliente> listaResultados = new ArrayList<>();
 
         String sql = """
                  SELECT 
+                     pa.nombre AS nombrePrueba,
                      r.idResultado, 
                      r.resultadoParametro, 
                      p.nombre AS parametro, 
@@ -79,19 +82,50 @@ public class ResultadoDAO implements IResultados {
                      c.apellidoMaterno
                  FROM Resultados r
                  JOIN ParametrosEvaluacion p ON r.idParametroEvaluacion = p.idParametroEvaluacion
+                 JOIN PruebasAnalisis pa ON p.idPruebaAnalisis = pa.idPruebaAnalisis
                  JOIN AnalisisClientes ac ON r.idAnalisisCliente = ac.idAnalisisCliente
                  JOIN Clientes c ON ac.idCliente = c.idCliente
-                 WHERE r.idAnalisisCliente = ?;
+                 WHERE c.idCliente = ?;
                  """;
 
         try (Connection conexion = this.conexionBD.crearConexion(); PreparedStatement pstmt = conexion.prepareStatement(sql)) {
 
-            pstmt.setInt(1, idAnalisisCliente);
+            pstmt.setInt(1, idCliente);
             ResultSet rs = pstmt.executeQuery();
 
+            Map<String, ResultadoPorCliente> resultadosMap = new HashMap<>();
+
             while (rs.next()) {
-                listaResultados.add(convertirResultadoPorCliente(rs));
+                String nombrePrueba = rs.getString("nombrePrueba");
+
+                // Si la prueba no está en el mapa, la agregamos
+                if (!resultadosMap.containsKey(nombrePrueba)) {
+                    ResultadoPorCliente resultadoPrueba = new ResultadoPorCliente(
+                            nombrePrueba,
+                            rs.getInt("folioAnalisis"),
+                            rs.getString("nombreCliente"),
+                            rs.getString("apellidoPaterno"),
+                            rs.getString("apellidoMaterno")
+                    );
+                    resultadosMap.put(nombrePrueba, resultadoPrueba);
+                }
+
+                // Agregamos el resultado a la prueba correspondiente
+                ResultadoPorCliente resultado = new ResultadoPorCliente(
+                        rs.getInt("idResultado"),
+                        rs.getString("resultadoParametro"),
+                        rs.getString("parametro"),
+                        rs.getString("rango"),
+                        rs.getInt("folioAnalisis"),
+                        rs.getString("nombreCliente"),
+                        rs.getString("apellidoPaterno"),
+                        rs.getString("apellidoMaterno")
+                );
+
+                resultadosMap.get(nombrePrueba).agregarResultado(resultado);
             }
+
+            listaResultados.addAll(resultadosMap.values());
 
         } catch (SQLException e) {
             throw new PersistenciaException("Error al obtener resultados por cliente");
@@ -99,6 +133,7 @@ public class ResultadoDAO implements IResultados {
 
         return listaResultados;
     }
+    
     
     private ResultadoEntidad convertirResultadoEntidad(ResultSet resultado) throws SQLException{
         int id = resultado.getInt("idResultado");
@@ -134,6 +169,8 @@ public class ResultadoDAO implements IResultados {
         }
         return paramEncontrado;
     }
+    
+    
     private ResultadoPorCliente convertirResultadoPorCliente(ResultSet rs) throws SQLException {
     return new ResultadoPorCliente(
         rs.getInt("idResultado"),
@@ -146,6 +183,12 @@ public class ResultadoDAO implements IResultados {
         rs.getString("apellidoMaterno")
     );
 }
+
+    @Override
+    public List<ResultadoPorCliente> ResultadosPorCliente(int idAnalisisCliente) throws PersistenciaException {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     
 }
     
