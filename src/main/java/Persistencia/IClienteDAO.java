@@ -24,7 +24,7 @@ public interface IClienteDAO {
 
     ClienteEntidad editar(EditarClienteDTO cliente) throws PersistenciaException;
 
-    Boolean eliminar(int id) throws PersistenciaException;
+    ClienteEntidad eliminar(int id) throws PersistenciaException;
 
     ClienteEntidad buscarPorId(int id) throws PersistenciaException;
     

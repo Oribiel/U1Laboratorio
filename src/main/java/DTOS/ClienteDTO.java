@@ -11,22 +11,23 @@ import java.time.LocalDate;
  * @author Usuario
  */
 public class ClienteDTO {
-    private int id;
+    private String id;
     private String nombres;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private LocalDate fechaNacimiento;
+    private String fechaNacimiento;
 
-    public ClienteDTO(int id, String nombres, String apellidoPaterno, String apellidoMaterno, LocalDate fechaNacimiento) {
+
+
+    public ClienteDTO(String id, String nombres, String apellidoPaterno, String apellidoMaterno, String fechaNacimiento) {
         this.id = id;
         this.nombres = nombres;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.fechaNacimiento = fechaNacimiento;
     }
-    
-    //GETTERS
-    public int getId() {
+
+    public String getId() {
         return id;
     }
 
@@ -42,29 +43,15 @@ public class ClienteDTO {
         return apellidoMaterno;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
+
+    @Override
+    public String toString() {
+        return "ClienteDTO{" + "id=" + id + ", nombres=" + nombres + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", fechaNacimiento=" + fechaNacimiento + '}';
+    }
     
-    //SETTERS 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
-    }
-
-    public void setApellidoPaterno(String apellidoPaterno) {
-        this.apellidoPaterno = apellidoPaterno;
-    }
-
-    public void setApellidoMaterno(String apellidoMaterno) {
-        this.apellidoMaterno = apellidoMaterno;
-    }
-
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
+    
     
 }
