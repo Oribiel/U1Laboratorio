@@ -14,9 +14,9 @@ import java.sql.SQLException;
  */
 public class ConexionBD implements IConexionBD {
 
-    //BASE DE DATOS CON EL QUE CONECTAMOS A MYSQL
+   
     private final String USUARIO = "root";
-    private final String CONTRASEÑA = "murrietaBD2025%";
+    private final String CONTRASEÑA = "1234";
     //NECESARIOS PARA LA CONEXION
     private final String SERVIDOR = "127.0.0.1";//localhost
     private final String BASE_DE_DATOS = "LaboratoriosBD";

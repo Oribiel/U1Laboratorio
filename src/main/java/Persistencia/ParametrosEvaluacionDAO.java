@@ -27,7 +27,7 @@ public class ParametrosEvaluacionDAO implements IParametrosEvaluacionDAO {
         PreparedStatement stmt = null;
         
         try {
-            // Establecer conexión a la base de datos
+           
             connection = conexionBD.crearConexion();
 
             // Obtener el idPruebaAnalisis usando el nombre de la prueba

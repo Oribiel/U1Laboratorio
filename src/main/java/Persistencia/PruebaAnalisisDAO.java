@@ -15,7 +15,7 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
         this.conexion = conexion;
     }
 
-    @Override
+   @Override
     public void registrar(PruebaAnalisis prueba) {
         String sql = "INSERT INTO PruebasAnalisis (nombre, idCategoria, idLaboratorio) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
@@ -48,7 +48,7 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
         return lista;
     }
 
-    @Override
+ @Override
     public PruebaAnalisis buscarPorId(int id) {
         String sql = "SELECT * FROM PruebasAnalisis WHERE idPruebaAnalisis = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
