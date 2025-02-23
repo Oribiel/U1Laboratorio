@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import DTOS.CategoriaDTO;
 import Entidades.CategoriaEntidad;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.List;
  * @author oribi
  */
 public interface ICategoriasNegocio {
-    
-     List<CategoriaEntidad> obtenerCategorias();
-     
+
+    public List<CategoriaDTO> obtenerCategorias(List<CategoriaEntidad> categorias) throws NegocioException;
+
+    public CategoriaDTO obtenerCategoriaPorId(int idCategoria) throws NegocioException;
 
 }
 
