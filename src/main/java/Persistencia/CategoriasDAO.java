@@ -8,9 +8,12 @@ package Persistencia;
  *
  * @author oribi
  */
+import Entidades.CategoriaEntidad;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class CategoriasDAO implements ICategoriasDAO {
 
@@ -22,26 +25,34 @@ public class CategoriasDAO implements ICategoriasDAO {
     }
 
   
-    public List<String> obtenerCategorias() throws SQLException {
-        List<String> categorias = new ArrayList<>();
-        String query = "SELECT nombre FROM Categorias";
+    public List<CategoriaEntidad> obtenerCategorias() {
+        List<CategoriaEntidad> categorias = new ArrayList<>();
+        String query = "SELECT * FROM Categorias";
 
       
         try (Connection connection = conexionBD.crearConexion();
-             Statement statement = connection.createStatement();
+             PreparedStatement statement = connection.prepareStatement(query);
              ResultSet resultSet = statement.executeQuery(query)) {
 
             while (resultSet.next()) {
-                categorias.add(resultSet.getString("nombre"));
+                categorias.add(convertirCategoriaEntidad(resultSet));
             }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(CategoriasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
         return categorias;
     }
 
  
-    public String obtenerCategoriaPorId(int idCategoria) throws SQLException {
-        String categoria = null;
+    @Override
+    public CategoriaEntidad obtenerCategoriaPorId(int idCategoria) {
+        CategoriaEntidad categoria = null;
         String query = "SELECT nombre FROM Categorias WHERE idCategoria = ?";
 
       
@@ -50,13 +61,29 @@ public class CategoriasDAO implements ICategoriasDAO {
             preparedStatement.setInt(1, idCategoria);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    categoria = resultSet.getString("nombre");
+                    categoria = convertirCategoriaEntidad(resultSet);
                 }
+                resultSet.close();
+                
             }
+            connection.close();
+            preparedStatement.close();
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(CategoriasDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return categoria;
     }
+    
+    private CategoriaEntidad convertirCategoriaEntidad(ResultSet resultado) throws SQLException{
+        int id= resultado.getInt("idCategoria");
+        String nombre= resultado.getString("nombre");
+        return new CategoriaEntidad(id, nombre);
+    
+    }
+    
         
 
 }

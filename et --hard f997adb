@@ -1,0 +1,36 @@
+* [33m7ee4718[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Reapply "Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio"
+* [33maa36cf0[m Revert "Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio"
+*   [33m3283c3e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio
+[32m|[m[33m\[m  
+[32m|[m *   [33mbd1778c[m Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio
+[32m|[m [34m|[m[35m\[m  
+[32m|[m * [35m|[m [33m5fc39fe[m cambios
+* [35m|[m [35m|[m [33mf997adb[m Persistencia de PruebasAnalisis
+[35m|[m [35m|[m[35m/[m  
+[35m|[m[35m/[m[35m|[m   
+* [35m|[m   [33mbb1e134[m Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio
+[36m|[m[1;31m\[m [35m\[m  
+[36m|[m * [35m|[m [33ma1e9dcf[m frms AdministrarClientes
+[36m|[m [35m|[m[35m/[m  
+[36m|[m * [33m5d96af1[m Update frmAdministrarPruebas.java
+[36m|[m * [33m64e1f3f[m cambios
+[36m|[m * [33mac6be2c[m categorias
+* [1;31m|[m [33mc3bd8ce[m Pruebas exitosas en CRUD CLIENTES
+[1;31m|[m[1;31m/[m  
+* [33m0905676[m correcciones en buscarClientesporLboratorio
+* [33mee91713[m CRUD CLIENTES PRUEBA
+* [33mfb131ca[m PruebasCliente
+* [33mb027467[m CRUD CLIENTES
+* [33m344bb0b[m Correccion
+* [33m44b922c[m intento de admin pruebas
+* [33me6e1ef8[m c
+*   [33mfbe4668[m Merge branch 'main' of https://github.com/Oribiel/U1Laboratorio
+[1;32m|[m[1;33m\[m  
+[1;32m|[m * [33maf0857d[m Update U1Laboratorio.java
+* [1;33m|[m [33m13cd650[m frms de administrar prueba
+[1;33m|[m[1;33m/[m  
+* [33ma24739c[m registrar pruebas
+* [33md75117b[m PersistenciaException
+* [33m41f6abd[m o
+* [33mc85130e[m Conexion a base de datos
+* [33m4bf3260[m primer commit

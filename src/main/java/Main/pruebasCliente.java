@@ -70,7 +70,7 @@ public class pruebasCliente {
             System.out.println("Cliente editado en la BD: "+clienteDto1);
 
 //            //ELIMINAR CLIENTE
-              ClienteDTO eliminado = clienteNegocio.eliminar(idGuardar);
+              ClienteDTO eliminado = clienteNegocio.eliminar(1);
               System.out.println("Cliente eliminado en la BD: "+eliminado.toString());
             
 //            //CATALAGO DE CLIENTES

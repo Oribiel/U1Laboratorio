@@ -8,12 +8,15 @@ package Persistencia;
  *
  * @author oribi
  */
+import DTOS.PruebaAnalisisDTO;
 import Entidades.PruebaAnalisis;
 import java.util.List;
 
 public interface IPruebaAnalisisDAO {
-    void registrar(PruebaAnalisis prueba);
-    List<PruebaAnalisis> listar();
-    PruebaAnalisis buscarPorId(int id);
+    PruebaAnalisis registrar(PruebaAnalisisDTO prueba);
+    
+    List<PruebaAnalisis> listarPruebasAnalisis(int idLaboratorio)throws PersistenciaException;
+    
+    PruebaAnalisis buscarPorId(int idPrueba,int idLaboratorio)throws PersistenciaException;
 }
 

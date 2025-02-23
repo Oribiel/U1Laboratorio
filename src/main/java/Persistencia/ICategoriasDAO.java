@@ -4,6 +4,7 @@
  */
 package Persistencia;
 
+import Entidades.CategoriaEntidad;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,6 +13,6 @@ import java.util.List;
  * @author oribi
  */
 public interface ICategoriasDAO {
-    List<String> obtenerCategorias() throws SQLException;
-    String obtenerCategoriaPorId(int idCategoria) throws SQLException;
+    List<CategoriaEntidad> obtenerCategorias() throws SQLException;
+    CategoriaEntidad obtenerCategoriaPorId(int idCategoria) throws SQLException;
 }
