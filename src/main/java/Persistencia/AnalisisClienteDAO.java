@@ -30,14 +30,13 @@ public class AnalisisClienteDAO implements IAnalisisClientes{
     @Override
     public AnalisisClienteEntidad generarUnAnalisisCliente(AnalisisClienteDTO analisisCliente) throws PersistenciaException {
          
-        String sql = "INSERT INTO AnalisisClientes (nombre, folio, fechaYhoraCaptura,idCliente) VALUES (?, ?, ?,?)";
+        String sql = "INSERT INTO AnalisisClientes (folio, fechaYhoraCaptura, idCliente) VALUES (?, ?, ?)";
         try {
             Connection conexion = this.conexion.crearConexion();
             PreparedStatement stmt = conexion.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
-            stmt.setInt(1, analisisCliente.getIdidAnalisisCliente());
-            stmt.setInt(2, analisisCliente.getFolio());
-            stmt.setTimestamp(3, Timestamp.valueOf(analisisCliente.getFechaYhoraCaptura()));
-            stmt.setInt(4, analisisCliente.getIdCliente());
+            stmt.setInt(1, analisisCliente.getFolio());
+            stmt.setTimestamp(2, Timestamp.valueOf(analisisCliente.getFechaYhoraCaptura()));
+            stmt.setInt(3, analisisCliente.getIdCliente());
 
             int filasAfectadas = stmt.executeUpdate();
             if (filasAfectadas == 0) {
@@ -71,7 +70,7 @@ public class AnalisisClienteDAO implements IAnalisisClientes{
         Timestamp timestamp = resultado.getTimestamp("fechaYHoraCaptura");
         // Convertir a LocalDateTime
         LocalDateTime fechaYhoraCaptura = timestamp.toLocalDateTime();
-       int idCliente = resultado.getInt("idLaboratorio");
+       int idCliente = resultado.getInt("idCliente");
        return new AnalisisClienteEntidad(id, folio, fechaYhoraCaptura, idCliente);    
     }
     public AnalisisClienteEntidad buscarAnalisisClienteID(int idAnalisisCliente, int idCliente) throws PersistenciaException{

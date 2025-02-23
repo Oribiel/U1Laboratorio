@@ -61,6 +61,11 @@ public class AnalisisClienteEntidad {
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
+
+    @Override
+    public String toString() {
+        return "AnalisisClienteEntidad{" + "ididAnalisisCliente=" + ididAnalisisCliente + ", folio=" + folio + ", fechaYhoraCaptura=" + fechaYhoraCaptura + ", idCliente=" + idCliente + '}';
+    }
     
     
     

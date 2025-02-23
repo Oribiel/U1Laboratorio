@@ -4,14 +4,17 @@
  */
 package Main;
 
+import DTOS.AnalisisClienteDTO;
 import DTOS.ClienteDTO;
 import DTOS.EditarClienteDTO;
 import DTOS.GuardarClienteDTO;
 import DTOS.TablaClienteDTO;
+import Entidades.AnalisisClienteEntidad;
 import Entidades.ClienteEntidad;
 import Entidades.LaboratorioEntidad;
 import Negocio.ClienteNegocio;
 import Negocio.NegocioException;
+import Persistencia.AnalisisClienteDAO;
 import Persistencia.ClienteDAO;
 import Persistencia.ConexionBD;
 import Persistencia.IConexionBD;
@@ -20,6 +23,7 @@ import Persistencia.PersistenciaException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.List;
 import java.util.logging.Level;
@@ -68,11 +72,20 @@ public class pruebasCliente {
             EditarClienteDTO editCliente = new EditarClienteDTO(idGuardar, "Jack", "Torres", "Murrieta", fechaNacimiento2);
             ClienteDTO clienteDto1 =  clienteNegocio.editar(editCliente);
             System.out.println("Cliente editado en la BD: "+clienteDto1);
+            
+            //GENERAR UN ANALISIS CLIENTE
+            AnalisisClienteDTO analisiscliente = new AnalisisClienteDTO(12, LocalDateTime.now(), idGuardar);
+            AnalisisClienteDAO acDTO = new AnalisisClienteDAO(conexion);
+            AnalisisClienteEntidad acEntidad = acDTO.generarUnAnalisisCliente(analisiscliente);
+            System.out.println("Analisis del Cliente es: "+acEntidad.toString());
+            
+            
+                    
 
 //            //ELIMINAR CLIENTE
-              ClienteDTO eliminado = clienteNegocio.eliminar(1);
-              System.out.println("Cliente eliminado en la BD: "+eliminado.toString());
-            
+//              ClienteDTO eliminado = clienteNegocio.eliminar(1);
+//              System.out.println("Cliente eliminado en la BD: "+eliminado.toString());
+//            
 //            //CATALAGO DE CLIENTES
             
             List<TablaClienteDTO> clientes = clienteNegocio.buscarClientesPorLaboratorio(1);
@@ -83,6 +96,8 @@ public class pruebasCliente {
             JOptionPane.showMessageDialog(null, "❌ Error al conectarse a la base de datos: " + ex.getMessage());
             ex.printStackTrace();
         } catch (NegocioException ex) {
+            Logger.getLogger(pruebasCliente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PersistenciaException ex) {
             Logger.getLogger(pruebasCliente.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             // Cerrar la conexión si se abrió correctamente
