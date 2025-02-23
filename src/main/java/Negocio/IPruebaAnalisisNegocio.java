@@ -12,7 +12,7 @@ import DTOS.PruebaAnalisisDTO;
 import java.util.List;
 
 public interface IPruebaAnalisisNegocio {
-    void registrarPrueba(PruebaAnalisisDTO pruebaDTO);
-    List<PruebaAnalisisDTO> listarPruebas();
-    PruebaAnalisisDTO obtenerPrueba(int id);
+    void registrarPrueba(PruebaAnalisisDTO pruebaDTO);  // Métodos relacionados con las pruebas
+    List<PruebaAnalisisDTO> listarPruebas();  // Listar pruebas
+    PruebaAnalisisDTO obtenerPrueba(int id);  // Obtener prueba por ID
 }

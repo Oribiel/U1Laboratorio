@@ -9,14 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
-    private Connection conexion;
+    private IConexionBD conexionBD;  // Usar IConexionBD en lugar de Connection
 
-    public PruebaAnalisisDAO(Connection conexion) {
-        this.conexion = conexion;
+    // Modificar el constructor para que reciba IConexionBD
+    public PruebaAnalisisDAO(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
     }
 
-   @Override
-    public void registrar(PruebaAnalisis prueba) {
+    @Override
+    public void registrar(PruebaAnalisis prueba, Connection conexion) {
         String sql = "INSERT INTO PruebasAnalisis (nombre, idCategoria, idLaboratorio) VALUES (?, ?, ?)";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setString(1, prueba.getNombre());
@@ -29,7 +30,7 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
     }
 
     @Override
-    public List<PruebaAnalisis> listar() {
+    public List<PruebaAnalisis> listar(Connection conexion) {
         List<PruebaAnalisis> lista = new ArrayList<>();
         String sql = "SELECT * FROM PruebasAnalisis";
 
@@ -48,8 +49,8 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
         return lista;
     }
 
- @Override
-    public PruebaAnalisis buscarPorId(int id) {
+    @Override
+    public PruebaAnalisis buscarPorId(int id, Connection conexion) {
         String sql = "SELECT * FROM PruebasAnalisis WHERE idPruebaAnalisis = ?";
         try (PreparedStatement stmt = conexion.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -69,3 +70,4 @@ public class PruebaAnalisisDAO implements IPruebaAnalisisDAO {
         return null;
     }
 }
+

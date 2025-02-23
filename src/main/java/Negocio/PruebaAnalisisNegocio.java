@@ -10,58 +10,77 @@ package Negocio;
  */
 import DTOS.PruebaAnalisisDTO;
 import Entidades.PruebaAnalisis;
+import Persistencia.IConexionBD;
 import Persistencia.IPruebaAnalisisDAO;
 import Persistencia.PruebaAnalisisDAO;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PruebaAnalisisNegocio implements IPruebaAnalisisNegocio {
     private IPruebaAnalisisDAO pruebaDAO;
+    private IConexionBD conexionBD;
 
-    public PruebaAnalisisNegocio(Connection conexion) {
-        this.pruebaDAO = new PruebaAnalisisDAO(conexion);
+    public PruebaAnalisisNegocio(IConexionBD conexionBD) {
+        this.conexionBD = conexionBD;
+        this.pruebaDAO = new PruebaAnalisisDAO(conexionBD); // Pasamos IConexionBD al DAO
     }
 
     @Override
     public void registrarPrueba(PruebaAnalisisDTO pruebaDTO) {
-        PruebaAnalisis prueba = new PruebaAnalisis(
-            0,  // ID será generado automáticamente por la base de datos
-            pruebaDTO.getNombre(),
-            pruebaDTO.getIdCategoria(),
-            pruebaDTO.getIdLaboratorio()
-        );
-        pruebaDAO.registrar(prueba);
+        try (Connection conexion = conexionBD.crearConexion()) {  // Obtenemos la conexión
+            PruebaAnalisis prueba = new PruebaAnalisis(
+                0, 
+                pruebaDTO.getNombre(),
+                pruebaDTO.getIdCategoria(),
+                pruebaDTO.getIdLaboratorio()
+            );
+            pruebaDAO.registrar(prueba, conexion);  // Pasamos la conexión al DAO
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<PruebaAnalisisDTO> listarPruebas() {
-        List<PruebaAnalisis> pruebas = pruebaDAO.listar();
-        List<PruebaAnalisisDTO> dtos = new ArrayList<>();
-
-        for (PruebaAnalisis p : pruebas) {
-            dtos.add(new PruebaAnalisisDTO(
-                p.getIdPruebaAnalisis(),
-                p.getNombre(),
-                p.getIdCategoria(),
-                p.getIdLaboratorio()
-            ));
+        try (Connection conexion = conexionBD.crearConexion()) {  // Obtenemos la conexión
+            List<PruebaAnalisis> pruebas = pruebaDAO.listar(conexion);  // Pasamos la conexión
+            List<PruebaAnalisisDTO> dtos = new ArrayList<>();
+            for (PruebaAnalisis p : pruebas) {
+                dtos.add(new PruebaAnalisisDTO(
+                    p.getIdPruebaAnalisis(),
+                    p.getNombre(),
+                    p.getIdCategoria(),
+                    p.getIdLaboratorio()
+                ));
+            }
+            return dtos;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
         }
-        return dtos;
     }
 
     @Override
     public PruebaAnalisisDTO obtenerPrueba(int id) {
-        PruebaAnalisis p = pruebaDAO.buscarPorId(id);
-        if (p == null) return null;
+        try (Connection conexion = conexionBD.crearConexion()) {  // Obtenemos la conexión
+            PruebaAnalisis p = pruebaDAO.buscarPorId(id, conexion);  // Pasamos la conexión
+            if (p == null) return null;
 
-        return new PruebaAnalisisDTO(
-            p.getIdPruebaAnalisis(),
-            p.getNombre(),
-            p.getIdCategoria(),
-            p.getIdLaboratorio()
-        );
+            return new PruebaAnalisisDTO(
+                p.getIdPruebaAnalisis(),
+                p.getNombre(),
+                p.getIdCategoria(),
+                p.getIdLaboratorio()
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
+
+
 
 

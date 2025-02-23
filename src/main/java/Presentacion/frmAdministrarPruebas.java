@@ -32,7 +32,8 @@ public class frmAdministrarPruebas extends javax.swing.JFrame {
         initComponents();
         parametrosNegocio = new ParametrosEvaluacionNegocio();
         categoriasNegocio = new CategoriasNegocio(new CategoriasDAO(new ConexionBD()));  
-        pruebaAnalisisNegocio = new PruebaAnalisisNegocio((Connection) new ConexionBD());  // Inicia la capa de negocio de pruebas
+        pruebaAnalisisNegocio = new PruebaAnalisisNegocio(new ConexionBD());  
+
         cargarCategorias();
     }
 
