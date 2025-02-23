@@ -4,11 +4,20 @@
  */
 package Persistencia;
 
+import DTOS.ParametrosDTO;
+import Entidades.ParametrosEntidad;
+import java.util.List;
+
 /**
  *
  * @author oribi
  */
 public interface IParametrosEvaluacionDAO {
-    void registrarParametro(String nombre, String rango, String nombrePrueba);
+    // se registra un parametro en alguna prueba
+    ParametrosEntidad registrarParametro(ParametrosDTO parametro)throws PersistenciaException;
+    //Se elimina un parametro de alguna prueba
+    ParametrosEntidad eliminarParametroEnPrueba(int idParam, int idPrueba) throws PersistenciaException;
+    //Obtiene Lista de los parametros que esten en una prueba
+    List<ParametrosEntidad> parametrosEnUnaPrueba(int idPrueba);
 }
 

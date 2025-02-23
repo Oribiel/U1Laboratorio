@@ -57,6 +57,11 @@ public class ParametrosEntidad {
     public void setIdPruebaAnalisis(int idPruebaAnalisis) {
         this.idPruebaAnalisis = idPruebaAnalisis;
     }
+
+    @Override
+    public String toString() {
+        return "ParametrosEntidad{" + "idParametroEvaluacion=" + idParametroEvaluacion + ", nombre=" + nombre + ", rango=" + rango + ", idPruebaAnalisis=" + idPruebaAnalisis + '}';
+    }
     
     
 }

@@ -4,9 +4,11 @@
  */
 package Main;
 
+import DTOS.ParametrosDTO;
 import DTOS.PruebaAnalisisDTO;
 import Entidades.CategoriaEntidad;
 import Entidades.LaboratorioEntidad;
+import Entidades.ParametrosEntidad;
 import Entidades.PruebaAnalisis;
 import Negocio.IPruebaAnalisisNegocio;
 import Negocio.NegocioException;
@@ -15,6 +17,7 @@ import Persistencia.ConexionBD;
 import Persistencia.IConexionBD;
 import Persistencia.IPruebaAnalisisDAO;
 import Persistencia.LaboratorioDAO;
+import Persistencia.ParametrosEvaluacionDAO;
 import Persistencia.PersistenciaException;
 import Persistencia.PruebaAnalisisDAO;
 import java.sql.Connection;
@@ -62,19 +65,30 @@ public class MainPruebas {
             PruebaAnalisis pruebaEntidad = pruebaDAO.registrar(pruebaDTO);
             System.out.println("La prueba registrada es: "+pruebaEntidad.toString());
             
-            //Listar Pruebas
-            List<PruebaAnalisis> pruebasExistentes = pruebaDAO.listarPruebasAnalisis(lab.getIdLaboratorio());
-            System.out.println("Pruebas en la BD: "+pruebasExistentes.toString());
+            //Registrar PARAMETROS EN UNA PRUEBA
+            ParametrosEvaluacionDAO paramDAO = new ParametrosEvaluacionDAO();
+            ParametrosDTO paramDTO = new ParametrosDTO("ParametroPrueba1", "ml",pruebaEntidad.getIdPruebaAnalisis() );
+            ParametrosEntidad paramEntidad = paramDAO.registrarParametro(paramDTO);
+            System.out.println("Parametro anadido: "+ paramEntidad.toString());
             
-            //BuscarPrueba
-            PruebaAnalisis pruebaEncontrada = pruebaDAO.buscarPorId(2, lab.getIdLaboratorio());
-            System.out.println("PruebaEncontrada: "+pruebaEncontrada);
+            //ELIMINAR PARAM EN UNA PRUEBA
+//            ParametrosEntidad eliminado = paramDAO.eliminarParametroEnPrueba(paramEntidad.getIdParametroEvaluacion(),2);
+//            System.out.println("param eliminado: "+eliminado.toString());
+            
+            //LISTAR PARAMETROS QUE ESTAN EN UNA PRUEBA
+            List<ParametrosEntidad> paramsEntidad = paramDAO.parametrosEnUnaPrueba(2);
+            System.out.println("Parametros en una prueba: "+paramsEntidad);
+//            //Listar Pruebas
+//            List<PruebaAnalisis> pruebasExistentes = pruebaDAO.listarPruebasAnalisis(lab.getIdLaboratorio());
+//            System.out.println("Pruebas en la BD: "+pruebasExistentes.toString());
+//            
+//            //BuscarPrueba
+//            PruebaAnalisis pruebaEncontrada = pruebaDAO.buscarPorId(2, lab.getIdLaboratorio());
+//            System.out.println("PruebaEncontrada: "+pruebaEncontrada);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "❌ Error al conectarse a la base de datos: " + ex.getMessage());
             ex.printStackTrace();
-        } catch (PersistenciaException ex) {
-            Logger.getLogger(MainPruebas.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             // Cerrar la conexión si se abrió correctamente
             if (conn != null) {
