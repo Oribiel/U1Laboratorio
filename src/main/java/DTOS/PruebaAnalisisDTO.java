@@ -15,8 +15,14 @@ public class PruebaAnalisisDTO {
     private int idLaboratorio;
 
    
-    public PruebaAnalisisDTO() {}
+    //Constructor para registrar Una prueba
+    public PruebaAnalisisDTO(String nombre, int idCategoria, int idLaboratorio) {
+        this.nombre = nombre;
+        this.idCategoria = idCategoria;
+        this.idLaboratorio = idLaboratorio;
+    }
 
+    // constructor Con todos los parametros
     public PruebaAnalisisDTO(int idPruebaAnalisis, String nombre, int idCategoria, int idLaboratorio) {
         this.idPruebaAnalisis = idPruebaAnalisis;
         this.nombre = nombre;

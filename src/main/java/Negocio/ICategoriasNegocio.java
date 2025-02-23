@@ -4,6 +4,7 @@
  */
 package Negocio;
 
+import Entidades.CategoriaEntidad;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,8 +13,9 @@ import java.util.List;
  * @author oribi
  */
 public interface ICategoriasNegocio {
-    List<String> obtenerCategorias() throws SQLException;
-    String obtenerCategoriaPorId(int idCategoria) throws SQLException;
     
+     List<CategoriaEntidad> obtenerCategorias();
+     
+
 }
 

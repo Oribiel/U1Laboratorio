@@ -14,8 +14,14 @@ public class ParametrosDTO {
     private String rango;
     private int idPruebaAnalisis;
 
-    public ParametrosDTO() {
+    //Constructor para guardar el param
+
+    public ParametrosDTO(String nombre, String rango, int idPruebaAnalisis) {
+        this.nombre = nombre;
+        this.rango = rango;
+        this.idPruebaAnalisis = idPruebaAnalisis;
     }
+    
 
     public ParametrosDTO(int idParametroEvaluacion, String nombre, String rango, int idPruebaAnalisis) {
         this.idParametroEvaluacion = idParametroEvaluacion;
@@ -54,6 +60,11 @@ public class ParametrosDTO {
 
     public void setIdPruebaAnalisis(int idPruebaAnalisis) {
         this.idPruebaAnalisis = idPruebaAnalisis;
+    }
+
+    @Override
+    public String toString() {
+        return "ParametrosDTO{" + "idParametroEvaluacion=" + idParametroEvaluacion + ", nombre=" + nombre + ", rango=" + rango + ", idPruebaAnalisis=" + idPruebaAnalisis + '}';
     }
     
     

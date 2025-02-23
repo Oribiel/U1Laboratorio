@@ -57,4 +57,10 @@ public class PruebaAnalisis {
     public void setIdLaboratorio(int idLaboratorio) {
         this.idLaboratorio = idLaboratorio;
     }
+
+    @Override
+    public String toString() {
+        return "PruebaAnalisis{" + "idPruebaAnalisis=" + idPruebaAnalisis + ", nombre=" + nombre + ", idCategoria=" + idCategoria + ", idLaboratorio=" + idLaboratorio + '}';
+    }
+    
 }

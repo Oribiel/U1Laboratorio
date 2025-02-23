@@ -35,6 +35,11 @@ public class CategoriaEntidad {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
+    @Override
+    public String toString() {
+        return "CategoriaEntidad{" + "idCategoria=" + idCategoria + ", nombre=" + nombre + '}';
+    }
      
      
 }
